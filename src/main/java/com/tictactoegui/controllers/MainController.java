@@ -16,7 +16,7 @@ public class MainController {
         loadMenuScreen();
     }
     public void loadMenuScreen() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/com/tictactoegui/fxmlFiles/MenuScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/com/tictactoegui/fxmlFiles/MenuScreen.fxml"));
         Pane pane = null;
         try {
             pane = loader.load();
