@@ -1,5 +1,6 @@
 package com.tictactoegui.controllers;
 
+import com.tictactoegui.Board;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
@@ -32,9 +33,13 @@ public class MenuController {
         try {
             pane = loader.load();
             GameController3x3 gameController = loader.getController();
+            Board board = new Board();
+            board.setBoard3x3();
+            gameController.setBoard(board);
             gameController.setMainController(mainController);
+            gameController.createBoard(getBoardSizeValue());
+            gameController.setPlayerType(getPlayerType());
             mainController.setMenuScreen(pane);
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -48,7 +53,7 @@ public class MenuController {
     public char getPlayerType() {
         char playerType = 0;
         if(playerTypeSlider.getValue() == 0.0) {
-            playerType = 'K';
+            playerType = 'C';
         }
         if(playerTypeSlider.getValue() == 1.0) {
             playerType = 'P';

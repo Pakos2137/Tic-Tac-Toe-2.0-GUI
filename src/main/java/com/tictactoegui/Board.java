@@ -11,15 +11,6 @@ public class Board {
                 board = new String[i][k];
             }
         }
-        for (int i = 0; i < 3; i++) {
-            number++;
-            board[i][0] = String.valueOf(number);
-            for (int k = 0; k < 3; k++) {
-                board[i][k] = String.valueOf(number);
-                number++;
-            }
-            number--;
-        }
     }
 
     public void setBoard10x10() {
@@ -69,7 +60,6 @@ public class Board {
             }
         }
     }
-
     public String[][] getBoard() {
         return board;
     }

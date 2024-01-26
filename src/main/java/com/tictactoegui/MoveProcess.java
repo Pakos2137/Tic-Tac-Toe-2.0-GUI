@@ -1,89 +1,41 @@
 package com.tictactoegui;
 
+import com.tictactoegui.controllers.GameController3x3;
+
 import java.util.Objects;
 import java.util.Random;
-import java.util.Scanner;
 
 public class MoveProcess {
-    String actualMove = "X";
+    int[] cpuMoveList = new int[2];
+    GameController3x3 gameController3x3;
     Board board;
     public MoveProcess(Board board) {
         this.board = board;
     }
-    public void playerFieldNumberInput() {
-        System.out.println("Wybierz pole:");
-        Scanner fieldNumberScan = new Scanner(System.in);
-        try {
-            int fieldNumber = fieldNumberScan.nextInt();
-            fieldEditor(fieldNumber);
-        } catch (Exception e) {
-            System.out.println("Wybierz poprawną liczbę");
-        }
+    public void playerMoveProcess(int row,int col,String actualMove) {
+        board.board[row][col] = String.valueOf(actualMove);
     }
-    public void fieldEditor(int fieldNumber) {
-        int row = 0;
-        int column = 0;
-        if(board.board.length == 3) {
-            int number = fieldNumber -1;
-            row = number/3;
-            column = number % 3;
-        }
-        if(board.board.length == 10) {
-            int number = fieldNumber;
-            row = number/10;
-            column = number%10;
-        }
-        String boardValue = board.board[row][column];
-        if (Objects.equals(String.valueOf(boardValue), String.valueOf(fieldNumber))) {
-            board.board[row][column] = String.valueOf(actualMove);
-            changeActualMove();
-            board.showBoard();
-        } else {
-            System.out.println("To Pole zostało już wybrane:");
-        }
-    }
-    public void cpuMove() {
+    public void cpuMove(String actualMove) {
         Random random = new Random();
         int row = 0;
         int column = 0;
 
         int randomNumber = random.nextInt((board.board.length * board.board.length));
-        System.out.println(randomNumber);
+        System.out.println("Wylosowana liczba " + randomNumber);
+        int number = randomNumber;
+        row = number/board.board.length;
+        column = number % board.board.length;
 
-        if(board.board.length == 3) {
-            int number = randomNumber++;
-            row = number/3;
-            column = number % 3;
-        }
-        if(board.board.length == 10) {
-            int number = randomNumber;
-            row = number/10;
-            column = number%10;
-        }
         String boardValue = board.board[row][column];
-        if (Objects.equals(String.valueOf(boardValue), String.valueOf(randomNumber))) {
+        if (boardValue == null) {
             board.board[row][column] = String.valueOf(actualMove);
-            changeActualMove();
-            board.showBoard();
+            cpuMoveList[0] = row;
+            cpuMoveList[1] = column;
         } else {
-            cpuMove();
-        }
-
-    }
-
-    private void changeActualMove() {
-        if(Objects.equals(getActualMove(), "X")) {
-            setActualMove("O");
-        } else {
-            setActualMove("X");
+            cpuMove(actualMove);
         }
     }
-
-    public String getActualMove() {
-        return actualMove;
-    }
-
-    public void setActualMove(String actualMove) {
-        this.actualMove = actualMove;
+    public int[] getCpuMoveList() {
+        return cpuMoveList;
     }
 }
