@@ -2,6 +2,7 @@ package com.tictactoegui.controllers;
 
 import com.tictactoegui.Board;
 import com.tictactoegui.MoveProcess;
+import com.tictactoegui.WinCheck;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ public class GameController3x3 {
     char playerType;
     MainController mainController;
     MoveProcess moveProcess;
+    WinCheck winCheck;
     @FXML
     private void backToMenu() {
         mainController.loadMenuScreen();
@@ -35,6 +37,8 @@ public class GameController3x3 {
                 button.setFocusTraversable(false);
                 gameBoard3x3Pane.add(button, col, row);
                 MoveProcess moveProcess = new MoveProcess(board);
+                WinCheck winCheck = new WinCheck(board);
+                this.winCheck = winCheck;
                 this.moveProcess = moveProcess;
             }
         }
@@ -50,29 +54,35 @@ public class GameController3x3 {
         }
         @Override
         public void handle(ActionEvent event) {
-            button.setText(getActualMove());
-            button.setDisable(true);
-            moveProcess.playerMoveProcess(row,col,actualMove);
-            changeActualMove();
-            if(playerType == 'C') {
-                moveProcess.cpuMove(actualMove);
-                int[] cpuMoveList = moveProcess.getCpuMoveList();
-                Button cpuButton = findButtonByPosition(cpuMoveList[0], cpuMoveList[1]);
-                cpuButton.setDisable(true);
-                cpuButton.setText(actualMove);
+            if(winCheck.isGameInProgress()) {
+                button.setText(getActualMove());
+                button.setDisable(true);
+                moveProcess.playerMoveProcess(row,col,actualMove);
                 changeActualMove();
-            }
-            board.showBoard();
-        }
-        private Button findButtonByPosition(int row, int col) {
-            //Button clickedButton = findButtonByPosition(row, col);
-            for (javafx.scene.Node node : gameBoard3x3Pane.getChildren()) {
-                if (node instanceof Button && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-                    return (Button) node;
+                System.out.println(winCheck.winCheck3x3());
+                if(playerType == 'C' && winCheck.isGameInProgress()) {
+                    cpuMoveProcess();
                 }
+                board.showBoard();
             }
-            return null;
         }
+    }
+    private Button findButtonByPosition(int row, int col) {
+        for (javafx.scene.Node node : gameBoard3x3Pane.getChildren()) {
+            if (node instanceof Button && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+                return (Button) node;
+            }
+        }
+        return null;
+    }
+    private void cpuMoveProcess() {
+        moveProcess.cpuMove(actualMove);
+        int[] cpuMoveList = moveProcess.getCpuMoveList();
+        Button cpuButton = findButtonByPosition(cpuMoveList[0], cpuMoveList[1]);
+        cpuButton.setDisable(true);
+        cpuButton.setText(getActualMove());
+        changeActualMove();
+        System.out.println(winCheck.winCheck3x3());
     }
     private void changeActualMove() {
         if(Objects.equals(getActualMove(), "X")) {
