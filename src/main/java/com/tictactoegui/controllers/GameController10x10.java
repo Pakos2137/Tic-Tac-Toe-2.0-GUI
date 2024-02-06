@@ -8,9 +8,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+
 import java.util.Objects;
 
-public class GameController3x3 {
+public class GameController10x10 {
     private String actualMove = "X";
     Board board;
     char playerType;
@@ -27,18 +28,18 @@ public class GameController3x3 {
         clearBoard();
     }
     @FXML
-    private GridPane gameBoard3x3Pane;
+    private GridPane gameBoard10x10Pane;
 
     public void createBoard(int boardValue) {
         backEndCreator();
         for (int row = 0; row < boardValue; row++) {
             for (int col = 0; col < boardValue; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
-                button.setMinSize(167, 167);
+                button.setMinSize(50, 50);
                 button.setOnAction(new ButtonClickHandler(button,row, col));
                 button.setText("");
                 button.setFocusTraversable(false);
-                gameBoard3x3Pane.add(button, col, row);
+                gameBoard10x10Pane.add(button, col, row);
             }
         }
     }
@@ -58,7 +59,7 @@ public class GameController3x3 {
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
-                System.out.println(winCheck.winCheck3x3());
+                System.out.println(winCheck.winCheck10x10());
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
@@ -67,7 +68,7 @@ public class GameController3x3 {
         }
     }
     private Button findButtonByPosition(int row, int col) {
-        for (javafx.scene.Node node : gameBoard3x3Pane.getChildren()) {
+        for (javafx.scene.Node node : gameBoard10x10Pane.getChildren()) {
             if (node instanceof Button && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
                 return (Button) node;
             }
@@ -81,7 +82,7 @@ public class GameController3x3 {
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
-        System.out.println(winCheck.winCheck3x3());
+        System.out.println(winCheck.winCheck10x10());
     }
     private void changeActualMove() {
         if(Objects.equals(getActualMove(), "X")) {
@@ -92,7 +93,7 @@ public class GameController3x3 {
     }
     private void backEndCreator() {
         Board board = new Board();
-        board.setBoard(3);
+        board.setBoard(10);
         MoveProcess moveProcess = new MoveProcess(board);
         WinCheck winCheck = new WinCheck(board);
         this.board = board;

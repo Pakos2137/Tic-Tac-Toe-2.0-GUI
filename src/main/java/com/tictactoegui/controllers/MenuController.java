@@ -10,9 +10,10 @@ import java.io.IOException;
 public class MenuController {
     MainController mainController;
     @FXML
-    private Slider boardSizeValue;
+    private Slider boardSizeSlider;
     @FXML
     private Slider playerTypeSlider;
+    private String boardReference;
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -27,14 +28,36 @@ public class MenuController {
     }
     @FXML
     private void startGame() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/com/tictactoegui/fxmlFiles/GameScreen3x3.fxml"));
+        switch (getBoardSizeValue()) {
+            case 3:
+                boardReference = "/com/tictactoegui/fxmlFiles/GameScreen3x3.fxml";
+                break;
+            case 10:
+                boardReference = "/com/tictactoegui/fxmlFiles/GameScreen10x10.fxml";
+                break;
+        }
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(boardReference));
         Pane pane = null;
         try {
             pane = loader.load();
-            GameController3x3 gameController = loader.getController();
-            gameController.setMainController(mainController);
-            gameController.createBoard(getBoardSizeValue());
-            gameController.setPlayerType(getPlayerType());
+
+            GameController3x3 gameController3x3 = null;
+            GameController10x10 gameController10x10 = null;
+
+            if(getBoardSizeValue() == 3) {
+                gameController3x3 = loader.getController();
+            } else if (getBoardSizeValue() == 10) {
+                gameController10x10 = loader.getController();
+            }
+            if (gameController3x3 != null) {
+                gameController3x3.setMainController(mainController);
+                gameController3x3.createBoard(getBoardSizeValue());
+                gameController3x3.setPlayerType(getPlayerType());
+            } else if (gameController10x10 != null) {
+                gameController10x10.setMainController(mainController);
+                gameController10x10.createBoard(getBoardSizeValue());
+                gameController10x10.setPlayerType(getPlayerType());
+            }
             mainController.setMenuScreen(pane);
 
         } catch (IOException e) {
@@ -43,7 +66,7 @@ public class MenuController {
     }
 
     public int getBoardSizeValue() {
-        return (int) boardSizeValue.getValue();
+        return (int) boardSizeSlider.getValue();
     }
 
     public char getPlayerType() {

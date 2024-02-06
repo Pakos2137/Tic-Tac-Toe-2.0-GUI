@@ -1,11 +1,13 @@
 package com.tictactoegui.backend;
 
+import com.tictactoegui.controllers.GameController10x10;
 import com.tictactoegui.controllers.GameController3x3;
 
 import java.util.Random;
 
 public class MoveProcess {
     int[] cpuMoveList = new int[2];
+    GameController10x10 gameController10x10;
     GameController3x3 gameController3x3;
     Board board;
     public MoveProcess(Board board) {
