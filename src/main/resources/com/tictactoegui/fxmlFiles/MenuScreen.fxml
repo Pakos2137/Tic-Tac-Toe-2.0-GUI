@@ -18,18 +18,18 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Slider fx:id="boardSizeSlider" blockIncrement="7.0" layoutX="249.0" layoutY="235.0" majorTickUnit="7.0" max="10.0" min="3.0" minorTickCount="0" prefHeight="85.0" prefWidth="102.0" snapToTicks="true" value="3.0" />
-      <Label layoutX="180.0" layoutY="252.0" text="3x3" textAlignment="CENTER">
+      <Slider fx:id="boardSizeSlider" blockIncrement="7.0" layoutX="249.0" layoutY="215.0" majorTickUnit="7.0" max="10.0" min="3.0" minorTickCount="0" prefHeight="85.0" prefWidth="102.0" snapToTicks="true" value="3.0" />
+      <Label layoutX="180.0" layoutY="232.0" text="3x3" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Label layoutX="361.0" layoutY="252.0" text="10x10" textAlignment="CENTER">
+      <Label layoutX="361.0" layoutY="232.0" text="10x10" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="87.0" layoutY="195.0" prefHeight="51.0" prefWidth="426.0" text="Wybierz Rozmiar Planszy" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="87.0" layoutY="164.0" prefHeight="51.0" prefWidth="426.0" text="Wybierz Rozmiar Planszy" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
@@ -39,26 +39,41 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="87.0" layoutY="378.0" prefHeight="51.0" prefWidth="426.0" text="Wybierz Tryb Gry" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="86.0" layoutY="316.0" prefHeight="51.0" prefWidth="426.0" text="Wybierz Tryb Gry" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Slider fx:id="playerTypeSlider" blockIncrement="1.0" layoutX="249.0" layoutY="412.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" prefHeight="85.0" prefWidth="102.0" snapToTicks="true" />
-      <Label layoutX="70.0" layoutY="429.0" text="Komputer" textAlignment="CENTER">
+      <Slider fx:id="playerTypeSlider" blockIncrement="1.0" layoutX="248.0" layoutY="350.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" prefHeight="85.0" prefWidth="102.0" snapToTicks="true" />
+      <Label layoutX="69.0" layoutY="367.0" text="Komputer" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Label layoutX="361.0" layoutY="429.0" prefHeight="51.0" prefWidth="226.0" text="Drugi Gracz" textAlignment="CENTER">
+      <Label layoutX="360.0" layoutY="367.0" prefHeight="51.0" prefWidth="226.0" text="Drugi Gracz" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Button fx:id="startGameButton" alignment="CENTER" layoutX="230.0" layoutY="558.0" mnemonicParsing="false" onAction="#startGame" prefHeight="65.0" prefWidth="140.0" text="START">
+      <Button fx:id="startGameButton" alignment="CENTER" layoutX="230.0" layoutY="590.0" mnemonicParsing="false" onAction="#startGame" prefHeight="65.0" prefWidth="140.0" text="START">
          <font>
             <Font size="31.0" />
          </font>
       </Button>
+      <Button fx:id="takeXButton" disable="true" layoutX="174.0" layoutY="504.0" mnemonicParsing="false" onAction="#takeX" prefHeight="66.0" prefWidth="66.0" text="X">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="takeOButton" layoutX="337.0" layoutY="504.0" mnemonicParsing="false" onAction="#takeO" prefHeight="66.0" prefWidth="66.0" text="O">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Label fx:id="startText" layoutX="213.0" layoutY="435.0" prefHeight="51.0" prefWidth="189.0" text="Zaczyna : X" textAlignment="CENTER">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

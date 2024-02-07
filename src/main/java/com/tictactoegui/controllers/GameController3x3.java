@@ -28,7 +28,7 @@ public class GameController3x3 {
         backEndCreator();
         clearBoard();
     }
-    public void createBoard(int boardValue) {
+    public void createBoard(int boardValue,char firstMove) {
         backEndCreator();
         for (int row = 0; row < boardValue; row++) {
             for (int col = 0; col < boardValue; col++) {
@@ -38,6 +38,7 @@ public class GameController3x3 {
                 button.setText("");
                 button.setFocusTraversable(false);
                 gameBoard3x3Pane.add(button, col, row);
+                setActualMove(String.valueOf(firstMove));
             }
         }
     }

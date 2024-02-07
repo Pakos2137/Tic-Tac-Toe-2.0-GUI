@@ -30,7 +30,7 @@ public class GameController10x10 {
     @FXML
     private GridPane gameBoard10x10Pane;
 
-    public void createBoard(int boardValue) {
+    public void createBoard(int boardValue,char firstMove) {
         backEndCreator();
         for (int row = 0; row < boardValue; row++) {
             for (int col = 0; col < boardValue; col++) {
@@ -40,6 +40,7 @@ public class GameController10x10 {
                 button.setText("");
                 button.setFocusTraversable(false);
                 gameBoard10x10Pane.add(button, col, row);
+                setActualMove(String.valueOf(firstMove));
             }
         }
     }

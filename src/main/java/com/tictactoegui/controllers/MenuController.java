@@ -2,6 +2,8 @@ package com.tictactoegui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 
@@ -13,7 +15,14 @@ public class MenuController {
     private Slider boardSizeSlider;
     @FXML
     private Slider playerTypeSlider;
+    @FXML
+    private Button takeXButton;
+    @FXML
+    private Button takeOButton;
+    @FXML
+    private Label startText;
     private String boardReference;
+    private char firstMoveChar = 'X';
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -21,6 +30,22 @@ public class MenuController {
     @FXML
     private void quitGame() {
         System.exit(0);
+    }
+    @FXML
+    private void takeX() {
+        takeOButton.setDisable(false);
+        takeXButton.setDisable(true);
+        takeOButton.setFocusTraversable(false);
+        startText.setText("Zaczyna : X");
+        setFirstMoveChar('X');
+    }
+    @FXML
+    private void takeO() {
+        takeXButton.setDisable(false);
+        takeOButton.setDisable(true);
+        takeXButton.setFocusTraversable(false);
+        startText.setText("Zaczyna : O");
+        setFirstMoveChar('O');
     }
     @FXML
     private void loadSaveMenu() {
@@ -51,11 +76,11 @@ public class MenuController {
             }
             if (gameController3x3 != null) {
                 gameController3x3.setMainController(mainController);
-                gameController3x3.createBoard(getBoardSizeValue());
+                gameController3x3.createBoard(getBoardSizeValue(),firstMoveChar);
                 gameController3x3.setPlayerType(getPlayerType());
             } else if (gameController10x10 != null) {
                 gameController10x10.setMainController(mainController);
-                gameController10x10.createBoard(getBoardSizeValue());
+                gameController10x10.createBoard(getBoardSizeValue(),firstMoveChar);
                 gameController10x10.setPlayerType(getPlayerType());
             }
             mainController.setMenuScreen(pane);
@@ -78,5 +103,13 @@ public class MenuController {
             playerType = 'P';
         }
         return playerType;
+    }
+
+    public char getFirstMoveChar() {
+        return firstMoveChar;
+    }
+
+    public void setFirstMoveChar(char firstMoveChar) {
+        this.firstMoveChar = firstMoveChar;
     }
 }
