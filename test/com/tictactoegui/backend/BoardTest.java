@@ -20,7 +20,7 @@ class BoardTest {
     public void board10x10test() {
         Board board = new Board();
 
-        assertEquals(board.board,null);
+        assertNull(board.board);
 
         board.setBoard(10);
 

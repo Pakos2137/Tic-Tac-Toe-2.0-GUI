@@ -2,7 +2,7 @@ package com.tictactoegui.controllers;
 
 import com.tictactoegui.backend.Board;
 import com.tictactoegui.backend.MoveProcess;
-import com.tictactoegui.backend.WinCheck;
+import com.tictactoegui.backend.CheckWin;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ public class GameController10x10 {
     char playerType;
     MainController mainController;
     MoveProcess moveProcess;
-    WinCheck winCheck;
+    CheckWin winCheck;
     @FXML
     private void backToMenu() {
         mainController.loadMenuScreen();
@@ -59,7 +59,7 @@ public class GameController10x10 {
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
-                System.out.println(winCheck.winCheck10x10());
+                System.out.println(winCheck.checkWin10x10());
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
@@ -82,23 +82,17 @@ public class GameController10x10 {
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
-        System.out.println(winCheck.winCheck10x10());
+        System.out.println(winCheck.checkWin10x10());
     }
     private void changeActualMove() {
-        if(Objects.equals(getActualMove(), "X")) {
-            setActualMove("O");
-        } else {
-            setActualMove("X");
-        }
+        actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
     }
     private void backEndCreator() {
-        Board board = new Board();
+        board = new Board();
         board.setBoard(10);
-        MoveProcess moveProcess = new MoveProcess(board);
-        WinCheck winCheck = new WinCheck(board);
-        this.board = board;
-        this.winCheck = winCheck;
-        this.moveProcess = moveProcess;
+        moveProcess = new MoveProcess(board);
+        winCheck = new CheckWin(board);
+
     }
     private void clearBoard() {
         for (int row = 0; row < board.getBoard().length; row++) {

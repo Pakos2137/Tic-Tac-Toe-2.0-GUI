@@ -2,7 +2,7 @@ package com.tictactoegui.controllers;
 
 import com.tictactoegui.backend.Board;
 import com.tictactoegui.backend.MoveProcess;
-import com.tictactoegui.backend.WinCheck;
+import com.tictactoegui.backend.CheckWin;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +16,9 @@ public class GameController3x3 {
     char playerType;
     MainController mainController;
     MoveProcess moveProcess;
-    WinCheck winCheck;
+    CheckWin winCheck;
+    @FXML
+    private GridPane gameBoard3x3Pane;
     @FXML
     private void backToMenu() {
         mainController.loadMenuScreen();
@@ -26,9 +28,6 @@ public class GameController3x3 {
         backEndCreator();
         clearBoard();
     }
-    @FXML
-    private GridPane gameBoard3x3Pane;
-
     public void createBoard(int boardValue) {
         backEndCreator();
         for (int row = 0; row < boardValue; row++) {
@@ -58,7 +57,7 @@ public class GameController3x3 {
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
-                System.out.println(winCheck.winCheck3x3());
+                System.out.println(winCheck.checkWin3x3());
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
@@ -81,23 +80,16 @@ public class GameController3x3 {
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
-        System.out.println(winCheck.winCheck3x3());
+        System.out.println(winCheck.checkWin3x3());
     }
     private void changeActualMove() {
-        if(Objects.equals(getActualMove(), "X")) {
-            setActualMove("O");
-        } else {
-            setActualMove("X");
-        }
+        actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
     }
     private void backEndCreator() {
-        Board board = new Board();
+        board = new Board();
         board.setBoard(3);
-        MoveProcess moveProcess = new MoveProcess(board);
-        WinCheck winCheck = new WinCheck(board);
-        this.board = board;
-        this.winCheck = winCheck;
-        this.moveProcess = moveProcess;
+        moveProcess = new MoveProcess(board);
+        winCheck = new CheckWin(board);
     }
     private void clearBoard() {
         for (int row = 0; row < board.getBoard().length; row++) {
