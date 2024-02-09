@@ -64,7 +64,6 @@ public class GameController10x10 {
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
-                board.showBoard();
             }
         }
     }

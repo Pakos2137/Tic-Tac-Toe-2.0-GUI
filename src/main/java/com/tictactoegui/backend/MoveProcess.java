@@ -22,7 +22,6 @@ public class MoveProcess {
         int column = 0;
 
         int randomNumber = random.nextInt((board.board.length * board.board.length));
-        System.out.println("Wylosowana liczba " + randomNumber);
         int number = randomNumber;
         row = number/board.board.length;
         column = number % board.board.length;

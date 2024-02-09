@@ -19,6 +19,7 @@ public class GameController3x3 {
     CheckWin winCheck;
     @FXML
     private GridPane gameBoard3x3Pane;
+    private String staringMove;
     @FXML
     private void backToMenu() {
         mainController.loadMenuScreen();
@@ -27,6 +28,7 @@ public class GameController3x3 {
     private void reset() {
         backEndCreator();
         clearBoard();
+        setActualMove(staringMove);
     }
     public void createBoard(int boardValue,char firstMove) {
         backEndCreator();
@@ -39,6 +41,7 @@ public class GameController3x3 {
                 button.setFocusTraversable(false);
                 gameBoard3x3Pane.add(button, col, row);
                 setActualMove(String.valueOf(firstMove));
+                staringMove = String.valueOf(firstMove);
             }
         }
     }
@@ -62,7 +65,6 @@ public class GameController3x3 {
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
-                board.showBoard();
             }
         }
     }

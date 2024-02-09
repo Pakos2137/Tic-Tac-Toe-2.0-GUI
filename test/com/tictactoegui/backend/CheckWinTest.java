@@ -69,9 +69,11 @@ public class CheckWinTest {
 
         for (int i = 0;i < gameBoard.board.length ;i++) {
             gameBoard.setBoard(10);
-            for (int k = 0; k < gameBoard.board.length ; k++) {
+            //int rand = random.nextInt(5);
+            for (int k = 0; k < gameBoard.board.length; k++) {
                 gameBoard.board[i][k] = "X";
             }
+            gameBoard.showBoard();
             assertFalse(checkWin.checkWin10x10());
         }
     }
