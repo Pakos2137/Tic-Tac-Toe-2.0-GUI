@@ -66,9 +66,23 @@ public class CheckWin {
                 currentLine += gameBoard.board[actualRow][actualColumn];
                 actualColumn--;
             }
+            StartingRowIndex++;
+
             linesList.add(currentLine);
             currentLine = "";
-            StartingRowIndex++;
+        }
+        startingColumnIndex = 0;
+        StartingRowIndex = 9;
+        for(int i = 0;i<10;i++) {
+            int actualColumn = startingColumnIndex;
+            for(int actualRow = 9;actualRow<startingColumnIndex+1;actualRow--) {
+                currentLine += gameBoard.board[actualRow][actualColumn];
+                actualColumn--;
+            }
+            startingColumnIndex++;
+
+            linesList.add(currentLine);
+            currentLine = "";
         }
     }
 
