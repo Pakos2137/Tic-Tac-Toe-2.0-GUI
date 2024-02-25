@@ -1,8 +1,8 @@
 package com.tictactoegui.controllers;
 
-import com.tictactoegui.backend.Board;
-import com.tictactoegui.backend.MoveProcess;
-import com.tictactoegui.backend.CheckWin;
+import com.tictactoegui.gameLogic.Board;
+import com.tictactoegui.gameLogic.MoveProcess;
+import com.tictactoegui.gameLogic.CheckWin;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,12 +26,12 @@ public class GameController3x3 {
     }
     @FXML
     private void reset() {
-        backEndCreator();
+        gameLogicSetter();
         clearBoard();
         setActualMove(staringMove);
     }
     public void createBoard(int boardValue,char firstMove) {
-        backEndCreator();
+        gameLogicSetter();
         for (int row = 0; row < boardValue; row++) {
             for (int col = 0; col < boardValue; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
@@ -78,8 +78,8 @@ public class GameController3x3 {
     }
     private void cpuMoveProcess() {
         moveProcess.cpuMove(actualMove);
-        int[] cpuMoveList = moveProcess.getCpuMoveList();
-        Button cpuButton = findButtonByPosition(cpuMoveList[0], cpuMoveList[1]);
+        int[] cpuMovePositionValues = moveProcess.getCpuMoveList();
+        Button cpuButton = findButtonByPosition(cpuMovePositionValues[0], cpuMovePositionValues[1]);
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
@@ -88,20 +88,20 @@ public class GameController3x3 {
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
     }
-    private void backEndCreator() {
+    private void gameLogicSetter() {
         board = new Board();
         board.setBoard(3);
         moveProcess = new MoveProcess(board);
         winCheck = new CheckWin(board);
     }
     private void clearBoard() {
-        for (int row = 0; row < board.getBoard().length; row++) {
-            for (int col = 0; col < board.getBoard().length; col++) {
-                Button editedButton = findButtonByPosition(row, col);
-                editedButton.setText("");
-                editedButton.setDisable(false);
-            }
-        }
+        gameBoard3x3Pane.getChildren().stream()
+                .filter(node -> node instanceof Button)
+                .map(node -> (Button) node)
+                .forEach(button -> {
+                    button.setText("");
+                    button.setDisable(false);
+                });
     }
     private String getActualMove() {
         return actualMove;

@@ -1,4 +1,4 @@
-package com.tictactoegui.backend;
+package com.tictactoegui.gameLogic;
 
 import com.tictactoegui.controllers.GameController10x10;
 import com.tictactoegui.controllers.GameController3x3;

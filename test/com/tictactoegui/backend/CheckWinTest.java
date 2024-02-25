@@ -1,4 +1,4 @@
-package com.tictactoegui.backend;
+package com.tictactoegui.gameLogic;
 
 import org.junit.jupiter.api.Test;
 

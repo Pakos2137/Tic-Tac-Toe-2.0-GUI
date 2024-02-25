@@ -7,6 +7,6 @@ module com.tictactoegui {
     exports com.tictactoegui;
     exports com.tictactoegui.controllers;
     opens com.tictactoegui.controllers to javafx.fxml;
-    exports com.tictactoegui.backend;
-    opens com.tictactoegui.backend to javafx.fxml;
+    exports com.tictactoegui.gameLogic;
+    opens com.tictactoegui.gameLogic to javafx.fxml;
 }

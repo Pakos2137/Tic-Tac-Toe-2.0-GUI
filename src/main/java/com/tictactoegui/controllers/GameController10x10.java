@@ -1,8 +1,8 @@
 package com.tictactoegui.controllers;
 
-import com.tictactoegui.backend.Board;
-import com.tictactoegui.backend.MoveProcess;
-import com.tictactoegui.backend.CheckWin;
+import com.tictactoegui.gameLogic.Board;
+import com.tictactoegui.gameLogic.MoveProcess;
+import com.tictactoegui.gameLogic.CheckWin;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,20 +18,22 @@ public class GameController10x10 {
     MainController mainController;
     MoveProcess moveProcess;
     CheckWin winCheck;
+    private String staringMove;
     @FXML
     private void backToMenu() {
         mainController.loadMenuScreen();
     }
     @FXML
     private void reset() {
-        backEndCreator();
+        gameLogicSetter();
         clearBoard();
+        setActualMove(staringMove);
     }
     @FXML
     private GridPane gameBoard10x10Pane;
 
     public void createBoard(int boardValue,char firstMove) {
-        backEndCreator();
+        gameLogicSetter();
         for (int row = 0; row < boardValue; row++) {
             for (int col = 0; col < boardValue; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
@@ -41,6 +43,7 @@ public class GameController10x10 {
                 button.setFocusTraversable(false);
                 gameBoard10x10Pane.add(button, col, row);
                 setActualMove(String.valueOf(firstMove));
+                staringMove = String.valueOf(firstMove);
             }
         }
     }
@@ -77,8 +80,8 @@ public class GameController10x10 {
     }
     private void cpuMoveProcess() {
         moveProcess.cpuMove(actualMove);
-        int[] cpuMoveList = moveProcess.getCpuMoveList();
-        Button cpuButton = findButtonByPosition(cpuMoveList[0], cpuMoveList[1]);
+        int[] cpuMovePositionList = moveProcess.getCpuMoveList();
+        Button cpuButton = findButtonByPosition(cpuMovePositionList[0], cpuMovePositionList[1]);
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
@@ -87,7 +90,7 @@ public class GameController10x10 {
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
     }
-    private void backEndCreator() {
+    private void gameLogicSetter() {
         board = new Board();
         board.setBoard(10);
         moveProcess = new MoveProcess(board);
@@ -95,13 +98,13 @@ public class GameController10x10 {
 
     }
     private void clearBoard() {
-        for (int row = 0; row < board.getBoard().length; row++) {
-            for (int col = 0; col < board.getBoard().length; col++) {
-                Button editedButton = findButtonByPosition(row, col);
-                editedButton.setText("");
-                editedButton.setDisable(false);
-            }
-        }
+        gameBoard10x10Pane.getChildren().stream()
+                .filter(node -> node instanceof Button)
+                .map(node -> (Button) node)
+                .forEach(button -> {
+                    button.setText("");
+                    button.setDisable(false);
+                });
     }
     private String getActualMove() {
         return actualMove;

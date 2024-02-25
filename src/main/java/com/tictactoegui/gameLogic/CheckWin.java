@@ -1,4 +1,4 @@
-package com.tictactoegui.backend;
+package com.tictactoegui.gameLogic;
 
 import java.util.ArrayList;
 
@@ -39,50 +39,36 @@ public class CheckWin {
         crossLinesToList10x10();
         checkForWin();
         return isGameInProgress();
-
     }
 
     private void crossLinesToList10x10() {
-        int StartingRowIndex;
-        int startingColumnIndex;
-        startingColumnIndex = 0;
-        StartingRowIndex = 0;
-
-        for(int i = 0;i<10;i++) {
-            int actualColumn = startingColumnIndex;
-            for(int actualRow = 0;actualRow<startingColumnIndex+1;actualRow++) {
-                currentLine += gameBoard.board[actualRow][actualColumn];
-                actualColumn--;
+        for (int i = 0; i < 10; i++) {
+            String currentLine = "";
+            for (int j = 0; j <= i; j++) {
+                currentLine += gameBoard.board[j][i - j];
             }
-            startingColumnIndex++;
-
             linesList.add(currentLine);
-            currentLine = "";
         }
-        startingColumnIndex = 9;
-        for(int i = 0;i<10;i++) {
-            int actualColumn = startingColumnIndex;
-            for(int actualRow = StartingRowIndex;actualRow<startingColumnIndex+1;actualRow++) {
-                currentLine += gameBoard.board[actualRow][actualColumn];
-                actualColumn--;
+        for (int i = 1; i < 10; i++) {
+            String currentLine = "";
+            for (int j = i; j < 10; j++) {
+                currentLine += gameBoard.board[j][9 - (j - i)];
             }
-            StartingRowIndex++;
-
             linesList.add(currentLine);
-            currentLine = "";
         }
-        startingColumnIndex = 0;
-        StartingRowIndex = 9;
-        for(int i = 0;i<10;i++) {
-            int actualColumn = startingColumnIndex;
-            for(int actualRow = 9;actualRow<startingColumnIndex+1;actualRow--) {
-                currentLine += gameBoard.board[actualRow][actualColumn];
-                actualColumn--;
+        for (int i = 0; i < 10; i++) {
+            String currentLine = "";
+            for (int j = i; j < 10; j++) {
+                currentLine += gameBoard.board[j][j - i];
             }
-            startingColumnIndex++;
-
             linesList.add(currentLine);
-            currentLine = "";
+        }
+        for (int i = 9; i >= 0; i--) {
+            String currentLine = "";
+            for (int j = 0; j <= i; j++) {
+                currentLine += gameBoard.board[j][9 - (i - j)];
+            }
+            linesList.add(currentLine);
         }
     }
 
@@ -111,7 +97,6 @@ public class CheckWin {
             setGameInProgress(false);
         }
     }
-
     private void conventRowsAndColumnsToList() {
         boardSize = gameBoard.board.length;
         currentLine = "";

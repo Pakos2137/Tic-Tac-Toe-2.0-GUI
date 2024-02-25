@@ -1,4 +1,4 @@
-package com.tictactoegui.backend;
+package com.tictactoegui.gameLogic;
 
 public class Board {
     private int number = 0;
