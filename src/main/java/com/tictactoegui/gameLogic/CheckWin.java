@@ -94,6 +94,7 @@ public class CheckWin {
             }
         }
         if(moveCounter >= boardSize * boardSize) {
+            System.out.println("remis");
             setGameInProgress(false);
         }
     }

@@ -1,7 +1,6 @@
 package com.tictactoegui.gameLogic;
 
 public class Board {
-    private int number = 0;
     String[][] board;
 
     public void setBoard(int size) {
@@ -20,8 +19,5 @@ public class Board {
             }
             System.out.println("");
         }
-    }
-    public String[][] getBoard() {
-        return board;
     }
 }

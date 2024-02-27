@@ -3,11 +3,14 @@ package com.tictactoegui.controllers;
 import com.tictactoegui.gameLogic.Board;
 import com.tictactoegui.gameLogic.MoveProcess;
 import com.tictactoegui.gameLogic.CheckWin;
+import com.tictactoegui.gameLogic.SaveGame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+
+import java.io.IOException;
 import java.util.Objects;
 
 public class GameController3x3 {
@@ -17,6 +20,7 @@ public class GameController3x3 {
     MainController mainController;
     MoveProcess moveProcess;
     CheckWin winCheck;
+    SaveGame saveGame;
     @FXML
     private GridPane gameBoard3x3Pane;
     private String staringMove;
@@ -29,6 +33,10 @@ public class GameController3x3 {
         gameLogicSetter();
         clearBoard();
         setActualMove(staringMove);
+    }
+    @FXML
+    private void openSaveMenu() throws IOException {
+        saveGame.openSaveMenu();
     }
     public void createBoard(int boardValue,char firstMove) {
         gameLogicSetter();
@@ -46,9 +54,9 @@ public class GameController3x3 {
         }
     }
     private class ButtonClickHandler implements EventHandler<ActionEvent> {
-        private Button button;
-        private int rowIndex;
-        private int columnIndex;
+        private final Button button;
+        private final int rowIndex;
+        private final int columnIndex;
         public ButtonClickHandler(Button button,int row, int col) {
             this.button = button;
             this.rowIndex = row;
@@ -61,7 +69,6 @@ public class GameController3x3 {
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
-                System.out.println(winCheck.checkWin3x3());
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
@@ -83,7 +90,6 @@ public class GameController3x3 {
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
-        System.out.println(winCheck.checkWin3x3());
     }
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
@@ -91,6 +97,7 @@ public class GameController3x3 {
     private void gameLogicSetter() {
         board = new Board();
         board.setBoard(3);
+        saveGame = new SaveGame(board);
         moveProcess = new MoveProcess(board);
         winCheck = new CheckWin(board);
     }
