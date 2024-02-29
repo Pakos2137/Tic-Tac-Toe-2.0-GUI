@@ -24,12 +24,12 @@ public class SaveGame {
     }
     public void openSaveMenu() throws IOException {
         this.saveGameStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/com/tictactoegui/fxmlFiles/saveMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/com/tictactoegui/fxmlFiles/SaveMenu.fxml"));
         Scene saveScene = new Scene(fxmlLoader.load(),300,200);
+        saveGameStage.setScene(saveScene);
         saveGameStage.setTitle("Zapisz Grę");
         saveGameStage.initModality(Modality.APPLICATION_MODAL);
         saveGameStage.setAlwaysOnTop(true);
-        saveGameStage.setScene(saveScene);
         saveGameStage.setResizable(false);
         saveGameStage.show();
         SaveMenuController saveMenuController = fxmlLoader.getController();
@@ -49,5 +49,4 @@ public class SaveGame {
         Files.write(path,boardValuesList, StandardOpenOption.TRUNCATE_EXISTING);
         saveGameStage.close();
     }
-
 }

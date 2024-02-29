@@ -1,5 +1,6 @@
 package com.tictactoegui.controllers;
 
+import com.tictactoegui.gameLogic.LoadGame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -49,7 +50,8 @@ public class MenuController {
     }
     @FXML
     private void loadSaveMenu() {
-
+        LoadGame loadGame = new LoadGame(getBoardSizeValue());
+        loadGame.openLoadMenu(mainController);
     }
     @FXML
     private void startGame() {
@@ -62,7 +64,7 @@ public class MenuController {
                 break;
         }
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(boardReference));
-        Pane pane = null;
+        Pane pane;
         try {
             pane = loader.load();
 
@@ -103,10 +105,6 @@ public class MenuController {
             playerType = 'P';
         }
         return playerType;
-    }
-
-    public char getFirstMoveChar() {
-        return firstMoveChar;
     }
 
     public void setFirstMoveChar(char firstMoveChar) {

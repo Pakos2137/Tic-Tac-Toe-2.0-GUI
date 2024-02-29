@@ -36,6 +36,7 @@ public class GameController3x3 {
     }
     @FXML
     private void openSaveMenu() throws IOException {
+        saveGame = new SaveGame(board);
         saveGame.openSaveMenu();
     }
     public void createBoard(int boardValue,char firstMove) {
@@ -69,8 +70,10 @@ public class GameController3x3 {
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
+                winCheck.checkWin3x3();
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
+                    winCheck.checkWin3x3();
                 }
             }
         }
@@ -97,7 +100,6 @@ public class GameController3x3 {
     private void gameLogicSetter() {
         board = new Board();
         board.setBoard(3);
-        saveGame = new SaveGame(board);
         moveProcess = new MoveProcess(board);
         winCheck = new CheckWin(board);
     }

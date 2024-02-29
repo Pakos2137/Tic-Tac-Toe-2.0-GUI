@@ -14,7 +14,6 @@ public class CheckWin {
         this.gameBoard = board;
     }
     public boolean checkWin3x3() {
-        moveCounter++;
         linesList.clear();
         conventRowsAndColumnsToList();
         //cross leftTop to rightDown
@@ -33,7 +32,6 @@ public class CheckWin {
         return isGameInProgress();
     }
     public boolean checkWin10x10() {
-        moveCounter++;
         linesList.clear();
         conventRowsAndColumnsToList();
         crossLinesToList10x10();
@@ -73,6 +71,7 @@ public class CheckWin {
     }
 
     private void checkForWin() {
+        moveCounter++;
         String XValue = null;
         String OValue = null;
         if (boardSize == 3) {
@@ -82,18 +81,17 @@ public class CheckWin {
             XValue = "XXXXX";
             OValue = "OOOOO";
         }
-        for(int i = 0;i<linesList.size();i++)
-        {
-            if(linesList.get(i).contains(XValue)) {
+        for (String s : linesList) {
+            if (s.contains(XValue)) {
                 System.out.println("X wygrało");
                 setGameInProgress(false);
             }
-            if(linesList.get(i).contains(OValue)) {
+            if (s.contains(OValue)) {
                 System.out.println("O wygrało");
                 setGameInProgress(false);
             }
         }
-        if(moveCounter >= boardSize * boardSize) {
+        if(moveCounter >= boardSize * boardSize && isGameInProgress()) {
             System.out.println("remis");
             setGameInProgress(false);
         }

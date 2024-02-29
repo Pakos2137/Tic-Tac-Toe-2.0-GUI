@@ -63,7 +63,7 @@ public class GameController10x10 {
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
-                System.out.println(winCheck.checkWin10x10());
+                winCheck.checkWin10x10();
                 if(playerType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                 }
@@ -85,7 +85,6 @@ public class GameController10x10 {
         cpuButton.setDisable(true);
         cpuButton.setText(getActualMove());
         changeActualMove();
-        System.out.println(winCheck.checkWin10x10());
     }
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
