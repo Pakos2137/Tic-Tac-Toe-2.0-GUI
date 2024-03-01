@@ -45,5 +45,10 @@
             <Font size="20.0" />
          </font>
       </Button>
+      <Button layoutX="467.0" layoutY="14.0" mnemonicParsing="false" onAction="#openSaveMenu" text="Zapisz Grę">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

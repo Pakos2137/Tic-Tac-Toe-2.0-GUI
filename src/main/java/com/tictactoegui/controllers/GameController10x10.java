@@ -3,15 +3,18 @@ package com.tictactoegui.controllers;
 import com.tictactoegui.gameLogic.Board;
 import com.tictactoegui.gameLogic.MoveProcess;
 import com.tictactoegui.gameLogic.CheckWin;
+import com.tictactoegui.gameLogic.SaveGame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class GameController10x10 {
+    SaveGame saveGame;
     private String actualMove = "X";
     Board board;
     char playerType;
@@ -28,6 +31,11 @@ public class GameController10x10 {
         gameLogicSetter();
         clearBoard();
         setActualMove(staringMove);
+    }
+    @FXML
+    private void openSaveMenu() throws IOException {
+        saveGame = new SaveGame(board);
+        saveGame.openSaveMenu();
     }
     @FXML
     private GridPane gameBoard10x10Pane;
