@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class GameController3x3 {
@@ -75,6 +76,7 @@ public class GameController3x3 {
                     cpuMoveProcess();
                     winCheck.checkWin3x3();
                 }
+                board.showBoard();
             }
         }
     }
@@ -111,6 +113,9 @@ public class GameController3x3 {
                     button.setText("");
                     button.setDisable(false);
                 });
+    }
+    public void loadGame(List<String> valuesOfBoard) {
+        board.valuesToBoard(valuesOfBoard);
     }
     private String getActualMove() {
         return actualMove;

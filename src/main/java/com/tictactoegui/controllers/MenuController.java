@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class MenuController {
+    GameController3x3 gameController3x3;
+    GameController10x10 gameController10x10;
     MainController mainController;
     @FXML
     private Slider boardSizeSlider;
@@ -50,7 +52,7 @@ public class MenuController {
     }
     @FXML
     private void loadSaveMenu() {
-        LoadGame loadGame = new LoadGame(getBoardSizeValue());
+        LoadGame loadGame = new LoadGame();
         loadGame.openLoadMenu(mainController);
     }
     @FXML
@@ -67,20 +69,13 @@ public class MenuController {
         Pane pane;
         try {
             pane = loader.load();
-
-            GameController3x3 gameController3x3 = null;
-            GameController10x10 gameController10x10 = null;
-
             if(getBoardSizeValue() == 3) {
                 gameController3x3 = loader.getController();
-            } else if (getBoardSizeValue() == 10) {
-                gameController10x10 = loader.getController();
-            }
-            if (gameController3x3 != null) {
                 gameController3x3.setMainController(mainController);
                 gameController3x3.createBoard(getBoardSizeValue(),firstMoveChar);
                 gameController3x3.setPlayerType(getPlayerType());
-            } else if (gameController10x10 != null) {
+            } else if (getBoardSizeValue() == 10) {
+                gameController10x10 = loader.getController();
                 gameController10x10.setMainController(mainController);
                 gameController10x10.createBoard(getBoardSizeValue(),firstMoveChar);
                 gameController10x10.setPlayerType(getPlayerType());

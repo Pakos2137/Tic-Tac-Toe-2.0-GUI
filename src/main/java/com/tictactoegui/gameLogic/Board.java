@@ -1,5 +1,7 @@
 package com.tictactoegui.gameLogic;
 
+import java.util.List;
+
 public class Board {
     String[][] board;
 
@@ -18,6 +20,19 @@ public class Board {
                 System.out.print(this.board[row][column] + "|");
             }
             System.out.println("");
+        }
+    }
+    public void valuesToBoard(List<String> valuesOfBoard) {
+        int i = 1;
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[row].length; column++) {
+                if (valuesOfBoard.get(i).equals("null")) {
+                    board[row][column] = null;
+                } else {
+                    board[row][column] = valuesOfBoard.get(i);
+                }
+                i++;
+            }
         }
     }
 }
