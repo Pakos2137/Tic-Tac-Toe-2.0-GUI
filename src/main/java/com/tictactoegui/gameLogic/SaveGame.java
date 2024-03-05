@@ -16,11 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaveGame {
+    String actualMove;
+    char enemyType;
     Stage saveGameStage;
     Board board;
 
-    public SaveGame(Board board) {
+    public SaveGame(Board board, String actualMove, char enemyType) {
         this.board = board;
+        this.actualMove = actualMove;
+        this.enemyType = enemyType;
     }
     public void openSaveMenu() throws IOException {
         this.saveGameStage = new Stage();
@@ -41,6 +45,8 @@ public class SaveGame {
         Path path = Paths.get("src/main/resources/save games/" + saveName);
         List<String> boardValuesList = new ArrayList<>();
         boardValuesList.add(String.valueOf(board.board.length));
+        boardValuesList.add(actualMove);
+        boardValuesList.add(String.valueOf(enemyType));
         for (int row = 0; row < board.board.length; row++) {
             for (int column = 0; column < this.board.board[row].length; column++) {
                 boardValuesList.add(String.valueOf(board.board[row][column]));

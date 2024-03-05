@@ -123,4 +123,8 @@ public class CheckWin {
     public void setGameInProgress(boolean gameInProgress) {
         this.gameInProgress = gameInProgress;
     }
+
+    public void setGameBoard(Board gameBoard) {
+        this.gameBoard = gameBoard;
+    }
 }

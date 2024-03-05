@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class GameController3x3 {
-    private String actualMove = "X";
-    Board board;
-    char playerType;
-    MainController mainController;
-    MoveProcess moveProcess;
-    CheckWin winCheck;
-    SaveGame saveGame;
+    private String actualMove;
+    private Board board;
+    private char enemyType;
+    private MainController mainController;
+    private MoveProcess moveProcess;
+    private CheckWin winCheck;
+    private SaveGame saveGame;
     @FXML
     private GridPane gameBoard3x3Pane;
     private String staringMove;
@@ -31,27 +31,38 @@ public class GameController3x3 {
     }
     @FXML
     private void reset() {
-        gameLogicSetter();
+        createNewGameLogic();
         clearBoard();
         setActualMove(staringMove);
     }
     @FXML
     private void openSaveMenu() throws IOException {
-        saveGame = new SaveGame(board);
+        saveGame = new SaveGame(board,actualMove, enemyType);
         saveGame.openSaveMenu();
     }
-    public void createBoard(int boardValue,char firstMove) {
-        gameLogicSetter();
-        for (int row = 0; row < boardValue; row++) {
-            for (int col = 0; col < boardValue; col++) {
+    public void setValues(MainController mainController,char firstMove,char playerType,boolean isNewGame) {
+        this.mainController = mainController;
+        staringMove = String.valueOf(firstMove);
+        this.enemyType = playerType;
+        setActualMove(String.valueOf(staringMove));
+        if(isNewGame) {
+            createNewGameLogic();
+            createBoard(3);
+        }
+        setActualMove(String.valueOf(staringMove));
+    }
+    public void createBoard(int boardSize) {
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
                 button.setMinSize(167, 167);
                 button.setOnAction(new ButtonClickHandler(button,row, col));
-                button.setText("");
+                button.setText(board.getBoard()[row][col]);
+                if(board.getBoard()[row][col] != null) {
+                    button.setDisable(true);
+                }
                 button.setFocusTraversable(false);
                 gameBoard3x3Pane.add(button, col, row);
-                setActualMove(String.valueOf(firstMove));
-                staringMove = String.valueOf(firstMove);
             }
         }
     }
@@ -72,11 +83,10 @@ public class GameController3x3 {
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
                 winCheck.checkWin3x3();
-                if(playerType == 'C' && winCheck.isGameInProgress()) {
+                if(enemyType == 'C' && winCheck.isGameInProgress()) {
                     cpuMoveProcess();
                     winCheck.checkWin3x3();
                 }
-                board.showBoard();
             }
         }
     }
@@ -99,7 +109,7 @@ public class GameController3x3 {
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
     }
-    private void gameLogicSetter() {
+    private void createNewGameLogic() {
         board = new Board();
         board.setBoard(3);
         moveProcess = new MoveProcess(board);
@@ -115,18 +125,18 @@ public class GameController3x3 {
                 });
     }
     public void loadGame(List<String> valuesOfBoard) {
+        Board board = new Board();
+        board.setBoard(3);
         board.valuesToBoard(valuesOfBoard);
+        winCheck = new CheckWin(board);
+        moveProcess = new MoveProcess(board);
+        this.board = board;
+        createBoard(3);
     }
     private String getActualMove() {
         return actualMove;
     }
     private void setActualMove(String actualMove) {
         this.actualMove = actualMove;
-    }
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-    public void setPlayerType(char playerType) {
-        this.playerType = playerType;
     }
 }

@@ -23,7 +23,7 @@ public class Board {
         }
     }
     public void valuesToBoard(List<String> valuesOfBoard) {
-        int i = 1;
+        int i = 3;
         for (int row = 0; row < board.length; row++) {
             for (int column = 0; column < board[row].length; column++) {
                 if (valuesOfBoard.get(i).equals("null")) {
@@ -34,5 +34,9 @@ public class Board {
                 i++;
             }
         }
+    }
+
+    public String[][] getBoard() {
+        return board;
     }
 }

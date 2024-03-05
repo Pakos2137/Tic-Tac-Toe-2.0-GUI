@@ -71,9 +71,7 @@ public class MenuController {
             pane = loader.load();
             if(getBoardSizeValue() == 3) {
                 gameController3x3 = loader.getController();
-                gameController3x3.setMainController(mainController);
-                gameController3x3.createBoard(getBoardSizeValue(),firstMoveChar);
-                gameController3x3.setPlayerType(getPlayerType());
+                gameController3x3.setValues(mainController,firstMoveChar,getPlayerType(),true);
             } else if (getBoardSizeValue() == 10) {
                 gameController10x10 = loader.getController();
                 gameController10x10.setMainController(mainController);

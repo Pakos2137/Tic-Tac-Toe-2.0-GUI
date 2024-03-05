@@ -34,7 +34,7 @@ public class GameController10x10 {
     }
     @FXML
     private void openSaveMenu() throws IOException {
-        saveGame = new SaveGame(board);
+        saveGame = new SaveGame(board, actualMove, playerType);
         saveGame.openSaveMenu();
     }
     @FXML

@@ -17,12 +17,13 @@ import java.util.List;
 public class LoadGame {
     GameController3x3 gameController3x3;
     GameController10x10 gameController10x10;
-    Board board;
     MainController mainController;
     private String boardReference;
     List<String> valuesOfBoard;
     Stage loadGameMenuStage;
-    int boardSizeValue;
+    private int boardSizeValue;
+    private char enemyType;
+    private String actualMove;
 
     public void openLoadMenu(MainController mainController) {
         this.loadGameMenuStage = new Stage();
@@ -46,6 +47,8 @@ public class LoadGame {
         try {
             valuesOfBoard = Files.readAllLines(saveToLoad);
             setBoardSizeValue(Integer.parseInt(valuesOfBoard.get(0)));
+            setActualMove(valuesOfBoard.get(1));
+            setEnemyType(valuesOfBoard.get(2).charAt(0));
             createGameWithLoadedValues();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -68,10 +71,8 @@ public class LoadGame {
 
             if(getBoardSizeValue() == 3) {
                 gameController3x3 = loader.getController();
-                gameController3x3.setMainController(mainController);
-                gameController3x3.createBoard(getBoardSizeValue(),'X');
-                gameController3x3.setPlayerType('C');
                 gameController3x3.loadGame(valuesOfBoard);
+                gameController3x3.setValues(mainController,actualMove.charAt(0),enemyType,false);
             } else if (getBoardSizeValue() == 10) {
                 gameController10x10 = loader.getController();
                 gameController10x10.setMainController(mainController);
@@ -90,5 +91,11 @@ public class LoadGame {
 
     public void setBoardSizeValue(int boardSizeValue) {
         this.boardSizeValue = boardSizeValue;
+    }
+    public void setEnemyType(char enemyType) {
+        this.enemyType = enemyType;
+    }
+    public void setActualMove(String actualMove) {
+        this.actualMove = actualMove;
     }
 }
