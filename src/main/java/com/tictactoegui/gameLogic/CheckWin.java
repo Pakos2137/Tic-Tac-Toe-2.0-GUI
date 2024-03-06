@@ -124,7 +124,11 @@ public class CheckWin {
         this.gameInProgress = gameInProgress;
     }
 
-    public void setGameBoard(Board gameBoard) {
-        this.gameBoard = gameBoard;
+    public int getMoveCounter() {
+        return moveCounter;
+    }
+
+    public void setMoveCounter(int moveCounter) {
+        this.moveCounter = moveCounter;
     }
 }

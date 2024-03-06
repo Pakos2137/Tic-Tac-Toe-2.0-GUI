@@ -16,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaveGame {
+    CheckWin checkWin;
     String actualMove;
     char enemyType;
     Stage saveGameStage;
     Board board;
 
-    public SaveGame(Board board, String actualMove, char enemyType) {
+    public SaveGame(Board board, String actualMove, char enemyType,CheckWin checkWin) {
+        this.checkWin = checkWin;
         this.board = board;
         this.actualMove = actualMove;
         this.enemyType = enemyType;
@@ -45,6 +47,7 @@ public class SaveGame {
         Path path = Paths.get("src/main/resources/save games/" + saveName);
         List<String> boardValuesList = new ArrayList<>();
         boardValuesList.add(String.valueOf(board.board.length));
+        boardValuesList.add(String.valueOf(checkWin.getMoveCounter()));
         boardValuesList.add(actualMove);
         boardValuesList.add(String.valueOf(enemyType));
         for (int row = 0; row < board.board.length; row++) {

@@ -24,6 +24,7 @@ public class LoadGame {
     private int boardSizeValue;
     private char enemyType;
     private String actualMove;
+    private int moveCounter;
 
     public void openLoadMenu(MainController mainController) {
         this.loadGameMenuStage = new Stage();
@@ -47,8 +48,9 @@ public class LoadGame {
         try {
             valuesOfBoard = Files.readAllLines(saveToLoad);
             setBoardSizeValue(Integer.parseInt(valuesOfBoard.get(0)));
-            setActualMove(valuesOfBoard.get(1));
-            setEnemyType(valuesOfBoard.get(2).charAt(0));
+            setMoveCounter(Integer.parseInt(valuesOfBoard.get(1)));
+            setActualMove(valuesOfBoard.get(2));
+            setEnemyType(valuesOfBoard.get(3).charAt(0));
             createGameWithLoadedValues();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -71,13 +73,12 @@ public class LoadGame {
 
             if(getBoardSizeValue() == 3) {
                 gameController3x3 = loader.getController();
-                gameController3x3.loadGame(valuesOfBoard);
+                gameController3x3.loadGame(valuesOfBoard,moveCounter);
                 gameController3x3.setValues(mainController,actualMove.charAt(0),enemyType,false);
             } else if (getBoardSizeValue() == 10) {
                 gameController10x10 = loader.getController();
-                gameController10x10.setMainController(mainController);
-                gameController10x10.createBoard(getBoardSizeValue(),'X');
-                gameController10x10.setPlayerType('C');
+                gameController10x10.loadGame(valuesOfBoard,moveCounter);
+                gameController10x10.setValues(mainController,actualMove.charAt(0),enemyType,false);
             }
             mainController.setMenuScreen(pane);
 
@@ -97,5 +98,8 @@ public class LoadGame {
     }
     public void setActualMove(String actualMove) {
         this.actualMove = actualMove;
+    }
+    public void setMoveCounter(int moveCounter) {
+        this.moveCounter = moveCounter;
     }
 }

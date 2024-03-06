@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -20,11 +21,13 @@ public class GameController3x3 {
     private char enemyType;
     private MainController mainController;
     private MoveProcess moveProcess;
-    private CheckWin winCheck;
+    private CheckWin checkWin;
     private SaveGame saveGame;
+    private String staringMove;
     @FXML
     private GridPane gameBoard3x3Pane;
-    private String staringMove;
+    @FXML
+    Label moveText;
     @FXML
     private void backToMenu() {
         mainController.loadMenuScreen();
@@ -37,21 +40,23 @@ public class GameController3x3 {
     }
     @FXML
     private void openSaveMenu() throws IOException {
-        saveGame = new SaveGame(board,actualMove, enemyType);
+        saveGame = new SaveGame(board,actualMove, enemyType, checkWin);
         saveGame.openSaveMenu();
     }
-    public void setValues(MainController mainController,char firstMove,char playerType,boolean isNewGame) {
+    public void setValues(MainController mainController, char firstMove, char playerType, boolean isNewGame) {
         this.mainController = mainController;
         staringMove = String.valueOf(firstMove);
         this.enemyType = playerType;
-        setActualMove(String.valueOf(staringMove));
+        setActualMove(staringMove);
+        moveText.setText("Ruch: " + actualMove);
+
         if(isNewGame) {
             createNewGameLogic();
-            createBoard(3);
+            createFrontBoard(3);
         }
         setActualMove(String.valueOf(staringMove));
     }
-    public void createBoard(int boardSize) {
+    private void createFrontBoard(int boardSize) {
         for (int row = 0; row < boardSize; row++) {
             for (int col = 0; col < boardSize; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
@@ -77,15 +82,15 @@ public class GameController3x3 {
         }
         @Override
         public void handle(ActionEvent event) {
-            if(winCheck.isGameInProgress()) {
+            if(checkWin.isGameInProgress()) {
                 button.setText(getActualMove());
                 button.setDisable(true);
                 moveProcess.playerMoveProcess(rowIndex, columnIndex,actualMove);
                 changeActualMove();
-                winCheck.checkWin3x3();
-                if(enemyType == 'C' && winCheck.isGameInProgress()) {
+                checkWin.checkWin3x3();
+                if(enemyType == 'C' && checkWin.isGameInProgress()) {
                     cpuMoveProcess();
-                    winCheck.checkWin3x3();
+                    checkWin.checkWin3x3();
                 }
             }
         }
@@ -108,12 +113,13 @@ public class GameController3x3 {
     }
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
-    }
+        moveText.setText("Ruch: " + actualMove);
+        }
     private void createNewGameLogic() {
         board = new Board();
         board.setBoard(3);
         moveProcess = new MoveProcess(board);
-        winCheck = new CheckWin(board);
+        checkWin = new CheckWin(board);
     }
     private void clearBoard() {
         gameBoard3x3Pane.getChildren().stream()
@@ -124,14 +130,15 @@ public class GameController3x3 {
                     button.setDisable(false);
                 });
     }
-    public void loadGame(List<String> valuesOfBoard) {
+    public void loadGame(List<String> valuesOfBoard, int moveCounter) {
         Board board = new Board();
         board.setBoard(3);
         board.valuesToBoard(valuesOfBoard);
-        winCheck = new CheckWin(board);
+        checkWin = new CheckWin(board);
+        checkWin.setMoveCounter(moveCounter);
         moveProcess = new MoveProcess(board);
         this.board = board;
-        createBoard(3);
+        createFrontBoard(3);
     }
     private String getActualMove() {
         return actualMove;
