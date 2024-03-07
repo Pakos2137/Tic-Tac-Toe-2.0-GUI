@@ -12,12 +12,12 @@ public class MainController {
     private StackPane mainStackPane;
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() {
         loadMenuScreen();
     }
     public void loadMenuScreen() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/com/tictactoegui/fxmlFiles/MenuScreen.fxml"));
-        Pane pane = null;
+        Pane pane;
         try {
             pane = loader.load();
         } catch (IOException e) {

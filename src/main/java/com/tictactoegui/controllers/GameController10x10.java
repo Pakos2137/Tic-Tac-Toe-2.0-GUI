@@ -10,20 +10,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class GameController10x10 {
+public class GameController10x10 extends GameController{
     private String actualMove;
     private Board board;
     private char enemyType;
     private MainController mainController;
     private MoveProcess moveProcess;
     private CheckWin checkWin;
-    private SaveGame saveGame;
-    private String staringMove;
+    private String startingMove;
     @FXML
     private GridPane gameBoard10x10Pane;
     @FXML
@@ -36,37 +34,33 @@ public class GameController10x10 {
     private void reset() {
         createNewGameLogic();
         clearBoard();
-        setActualMove(staringMove);
+        setActualMove(startingMove);
     }
     @FXML
     private void openSaveMenu() throws IOException {
-        saveGame = new SaveGame(board,actualMove, enemyType, checkWin);
+        SaveGame saveGame = new SaveGame(board, actualMove, enemyType, checkWin);
         saveGame.openSaveMenu();
     }
     public void setValues(MainController mainController, char firstMove, char playerType, boolean isNewGame) {
         this.mainController = mainController;
-        staringMove = String.valueOf(firstMove);
+        startingMove = String.valueOf(firstMove);
         this.enemyType = playerType;
-        setActualMove(staringMove);
+        setActualMove(startingMove);
         moveText.setText("Ruch: " + actualMove);
 
         if(isNewGame) {
             createNewGameLogic();
-            createFrontBoard(10);
+            createFrontBoard();
         }
-        setActualMove(String.valueOf(staringMove));
+        setActualMove(String.valueOf(startingMove));
     }
-    private void createFrontBoard(int boardSize) {
-        for (int row = 0; row < boardSize; row++) {
-            for (int col = 0; col < boardSize; col++) {
+    private void createFrontBoard() {
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
                 button.setMinSize(50, 50);
-                button.setOnAction(new ButtonClickHandler(button,row, col));
-                button.setText(board.getBoard()[row][col]);
-                if(board.getBoard()[row][col] != null) {
-                    button.setDisable(true);
-                }
-                button.setFocusTraversable(false);
+                button.setOnAction(new GameController10x10.ButtonClickHandler(button,row, col));
+                buttonEditor(button,board,row,col);
                 gameBoard10x10Pane.add(button, col, row);
             }
         }
@@ -91,6 +85,9 @@ public class GameController10x10 {
                 if(enemyType == 'C' && checkWin.isGameInProgress()) {
                     cpuMoveProcess();
                     checkWin.checkWin10x10();
+                }
+                if(!checkWin.isGameInProgress()) {
+                    setGameResultText();
                 }
             }
         }
@@ -138,12 +135,15 @@ public class GameController10x10 {
         checkWin.setMoveCounter(moveCounter);
         moveProcess = new MoveProcess(board);
         this.board = board;
-        createFrontBoard(10);
+        createFrontBoard();
     }
     private String getActualMove() {
         return actualMove;
     }
     private void setActualMove(String actualMove) {
         this.actualMove = actualMove;
+    }
+    public void setGameResultText() {
+        moveText.setText(checkWin.getGameResultText());
     }
 }

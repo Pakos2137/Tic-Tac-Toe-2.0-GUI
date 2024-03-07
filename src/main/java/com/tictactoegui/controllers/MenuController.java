@@ -1,6 +1,7 @@
 package com.tictactoegui.controllers;
 
 import com.tictactoegui.gameLogic.LoadGame;
+import com.tictactoegui.gameLogic.LoadingMethods;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -10,7 +11,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class MenuController {
+public class MenuController extends LoadingMethods {
     GameController3x3 gameController3x3;
     GameController10x10 gameController10x10;
     MainController mainController;
@@ -24,7 +25,6 @@ public class MenuController {
     private Button takeOButton;
     @FXML
     private Label startText;
-    private String boardReference;
     private char firstMoveChar = 'X';
 
     public void setMainController(MainController mainController) {
@@ -57,24 +57,17 @@ public class MenuController {
     }
     @FXML
     private void startGame() {
-        switch (getBoardSizeValue()) {
-            case 3:
-                boardReference = "/com/tictactoegui/fxmlFiles/GameScreen3x3.fxml";
-                break;
-            case 10:
-                boardReference = "/com/tictactoegui/fxmlFiles/GameScreen10x10.fxml";
-                break;
-        }
+        String boardReference = getReferenceToFXML(getBoardSizeValue());
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(boardReference));
         Pane pane;
         try {
             pane = loader.load();
             if(getBoardSizeValue() == 3) {
                 gameController3x3 = loader.getController();
-                gameController3x3.setValues(mainController,firstMoveChar,getPlayerType(),true);
+                gameController3x3.setValues(mainController,firstMoveChar, sliderToPlayerType(),true);
             } else if (getBoardSizeValue() == 10) {
                 gameController10x10 = loader.getController();
-                gameController10x10.setValues(mainController,firstMoveChar,getPlayerType(),true);
+                gameController10x10.setValues(mainController,firstMoveChar, sliderToPlayerType(),true);
             }
             mainController.setMenuScreen(pane);
 
@@ -82,12 +75,11 @@ public class MenuController {
             throw new RuntimeException(e);
         }
     }
-
     public int getBoardSizeValue() {
         return (int) boardSizeSlider.getValue();
     }
 
-    public char getPlayerType() {
+    public char sliderToPlayerType() {
         char playerType = 0;
         if(playerTypeSlider.getValue() == 0.0) {
             playerType = 'C';

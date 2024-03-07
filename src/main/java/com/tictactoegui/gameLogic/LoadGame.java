@@ -14,11 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class LoadGame {
+public class LoadGame extends LoadingMethods {
     GameController3x3 gameController3x3;
     GameController10x10 gameController10x10;
     MainController mainController;
-    private String boardReference;
     List<String> valuesOfBoard;
     Stage loadGameMenuStage;
     private int boardSizeValue;
@@ -58,14 +57,7 @@ public class LoadGame {
     }
 
     private void createGameWithLoadedValues() {
-        switch (getBoardSizeValue()) {
-            case 3:
-                boardReference = "/com/tictactoegui/fxmlFiles/GameScreen3x3.fxml";
-                break;
-            case 10:
-                boardReference = "/com/tictactoegui/fxmlFiles/GameScreen10x10.fxml";
-                break;
-        }
+        String boardReference = getReferenceToFXML(getBoardSizeValue());
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(boardReference));
         Pane pane;
         try {

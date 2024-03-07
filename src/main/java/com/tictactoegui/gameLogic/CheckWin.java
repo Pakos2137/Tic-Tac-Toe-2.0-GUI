@@ -1,5 +1,7 @@
 package com.tictactoegui.gameLogic;
 
+import com.tictactoegui.controllers.GameController;
+
 import java.util.ArrayList;
 
 public class CheckWin {
@@ -9,6 +11,7 @@ public class CheckWin {
     private int boardSize;
     private boolean gameInProgress = true;
     ArrayList<String> linesList = new ArrayList<>();
+    String gameResultText;
 
     public CheckWin(Board board) {
         this.gameBoard = board;
@@ -83,16 +86,16 @@ public class CheckWin {
         }
         for (String s : linesList) {
             if (s.contains(XValue)) {
-                System.out.println("X wygrało");
+                setGameResultText("X wygrało");
                 setGameInProgress(false);
             }
             if (s.contains(OValue)) {
-                System.out.println("O wygrało");
+                setGameResultText("0 Wygrało");
                 setGameInProgress(false);
             }
         }
         if(moveCounter >= boardSize * boardSize && isGameInProgress()) {
-            System.out.println("remis");
+            setGameResultText("Remis");
             setGameInProgress(false);
         }
     }
@@ -130,5 +133,12 @@ public class CheckWin {
 
     public void setMoveCounter(int moveCounter) {
         this.moveCounter = moveCounter;
+    }
+
+    public String getGameResultText() {
+        return gameResultText;
+    }
+    public void setGameResultText(String gameResultText) {
+        this.gameResultText = gameResultText;
     }
 }

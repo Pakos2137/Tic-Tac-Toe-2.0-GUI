@@ -15,15 +15,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class GameController3x3 {
+public class GameController3x3 extends GameController{
     private String actualMove;
     private Board board;
     private char enemyType;
     private MainController mainController;
     private MoveProcess moveProcess;
     private CheckWin checkWin;
-    private SaveGame saveGame;
-    private String staringMove;
+    private String startingMove;
     @FXML
     private GridPane gameBoard3x3Pane;
     @FXML
@@ -36,37 +35,33 @@ public class GameController3x3 {
     private void reset() {
         createNewGameLogic();
         clearBoard();
-        setActualMove(staringMove);
+        setActualMove(startingMove);
     }
     @FXML
     private void openSaveMenu() throws IOException {
-        saveGame = new SaveGame(board,actualMove, enemyType, checkWin);
+        SaveGame saveGame = new SaveGame(board, actualMove, enemyType, checkWin);
         saveGame.openSaveMenu();
     }
     public void setValues(MainController mainController, char firstMove, char playerType, boolean isNewGame) {
         this.mainController = mainController;
-        staringMove = String.valueOf(firstMove);
+        startingMove = String.valueOf(firstMove);
         this.enemyType = playerType;
-        setActualMove(staringMove);
+        setActualMove(startingMove);
         moveText.setText("Ruch: " + actualMove);
 
         if(isNewGame) {
             createNewGameLogic();
-            createFrontBoard(3);
+            createFrontBoard();
         }
-        setActualMove(String.valueOf(staringMove));
+        setActualMove(String.valueOf(startingMove));
     }
-    private void createFrontBoard(int boardSize) {
-        for (int row = 0; row < boardSize; row++) {
-            for (int col = 0; col < boardSize; col++) {
+    private void createFrontBoard() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
                 button.setMinSize(167, 167);
                 button.setOnAction(new ButtonClickHandler(button,row, col));
-                button.setText(board.getBoard()[row][col]);
-                if(board.getBoard()[row][col] != null) {
-                    button.setDisable(true);
-                }
-                button.setFocusTraversable(false);
+                buttonEditor(button,board,row,col);
                 gameBoard3x3Pane.add(button, col, row);
             }
         }
@@ -92,6 +87,9 @@ public class GameController3x3 {
                     cpuMoveProcess();
                     checkWin.checkWin3x3();
                 }
+                if(!checkWin.isGameInProgress()) {
+                    setGameResultText();
+                }
             }
         }
     }
@@ -114,7 +112,7 @@ public class GameController3x3 {
     private void changeActualMove() {
         actualMove = Objects.equals(getActualMove(), "X") ? "O" : "X";
         moveText.setText("Ruch: " + actualMove);
-        }
+    }
     private void createNewGameLogic() {
         board = new Board();
         board.setBoard(3);
@@ -138,12 +136,15 @@ public class GameController3x3 {
         checkWin.setMoveCounter(moveCounter);
         moveProcess = new MoveProcess(board);
         this.board = board;
-        createFrontBoard(3);
+        createFrontBoard();
     }
     private String getActualMove() {
         return actualMove;
     }
     private void setActualMove(String actualMove) {
         this.actualMove = actualMove;
+    }
+    public void setGameResultText() {
+        moveText.setText(checkWin.getGameResultText());
     }
 }

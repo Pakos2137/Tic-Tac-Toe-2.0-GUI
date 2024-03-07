@@ -13,8 +13,8 @@ public class MoveProcess {
     }
     public void cpuMove(String actualMove) {
         Random random = new Random();
-        int row = 0;
-        int column = 0;
+        int row;
+        int column;
 
         int randomNumber = random.nextInt((board.board.length * board.board.length));
         int number = randomNumber;

@@ -6,8 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class LoadGameController {
     LoadGame loadGame;
