@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,6 +42,10 @@ public class LoadGame extends LoadingMethods {
     }
     public void loadGame(String name,MainController mainController) {
         this.mainController = mainController;
+        File directory = new File("src/main/resources/save games");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
 
         Path saveToLoad = Paths.get("src/main/resources/save games/" + name);
 

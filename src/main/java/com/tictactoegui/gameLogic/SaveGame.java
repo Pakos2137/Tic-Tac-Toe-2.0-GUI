@@ -41,8 +41,15 @@ public class SaveGame {
         saveMenuController.setSaveGame(this);
     }
     public void addNewGameSave(String saveName) throws IOException {
-        File file = new File("src/main/resources/save games/" + saveName);
-        file.createNewFile();
+        File directory = new File("src/main/resources/save games");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        File file = new File(directory, saveName);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         Path path = Paths.get("src/main/resources/save games/" + saveName);
         List<String> boardValuesList = new ArrayList<>();
         boardValuesList.add(String.valueOf(board.board.length));

@@ -35,6 +35,10 @@ public class LoadGameController {
 
     }
     public void initialize() {
+        File directory = new File("src/main/resources/save games");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
         File resourcesFolder = new File("src/main/resources/save games");
         File[] files = resourcesFolder.listFiles();
         for (File file : files) {
