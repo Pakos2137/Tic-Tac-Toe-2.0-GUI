@@ -51,6 +51,12 @@ public class SaveGame {
             file.createNewFile();
         }
         Path path = Paths.get("src/main/resources/save games/" + saveName);
+        List<String> boardValuesList = getBoardValuesList();
+        Files.write(path,boardValuesList, StandardOpenOption.TRUNCATE_EXISTING);
+        saveGameStage.close();
+    }
+
+    private List<String> getBoardValuesList() {
         List<String> boardValuesList = new ArrayList<>();
         boardValuesList.add(String.valueOf(board.board.length));
         boardValuesList.add(String.valueOf(checkWin.getMoveCounter()));
@@ -61,7 +67,6 @@ public class SaveGame {
                 boardValuesList.add(String.valueOf(board.board[row][column]));
             }
         }
-        Files.write(path,boardValuesList, StandardOpenOption.TRUNCATE_EXISTING);
-        saveGameStage.close();
+        return boardValuesList;
     }
 }
