@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -59,6 +62,7 @@ public class GameController10x10 extends GameController{
             for (int col = 0; col < 10; col++) {
                 Button button = new Button("Button " + (row * 3 + col + 1));
                 button.setMinSize(50, 50);
+                button.setFont(Font.font("Arial", FontWeight.BOLD, 15));
                 button.setOnAction(new GameController10x10.ButtonClickHandler(button,row, col));
                 buttonEditor(button,board,row,col);
                 gameBoard10x10Pane.add(button, col, row);
